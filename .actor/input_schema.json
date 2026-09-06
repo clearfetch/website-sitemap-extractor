@@ -1,0 +1,76 @@
+{
+    "title": "Website Sitemap Extractor input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "urls": {
+            "title": "Websites",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Domains, one per line. You do not need to know where the sitemap is: it is found from robots.txt, the homepage, or the usual paths. A direct link to a sitemap.xml works too and is used as-is.",
+            "prefill": [
+                "apify.com",
+                "vercel.com"
+            ]
+        },
+        "maxUrlsPerSite": {
+            "title": "Maximum URLs per website",
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 500000,
+            "description": "Stop after this many URLs from one website. 0 means no limit."
+        },
+        "maxSitemaps": {
+            "title": "Maximum sitemap files per website",
+            "type": "integer",
+            "default": 50,
+            "minimum": 1,
+            "maximum": 1000,
+            "description": "How many sitemap files to read per website. Large sites split their sitemap into hundreds of files behind an index."
+        },
+        "urlPattern": {
+            "title": "URL filter",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional case-insensitive regular expression. Only URLs matching it are returned, for example \"/blog/\" or \"\\\\.html$\"."
+        },
+        "changedSince": {
+            "title": "Changed since",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional date such as 2026-01-31. Only URLs whose lastmod is on or after it are returned, which is how you pull just what changed."
+        },
+        "includeUrlList": {
+            "title": "Include the URL list",
+            "type": "boolean",
+            "default": true,
+            "description": "Turn off to get only the counts and the sitemap tree, which is useful when auditing many sites at once."
+        },
+        "maxConcurrency": {
+            "title": "Concurrency",
+            "type": "integer",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Websites processed in parallel."
+        },
+        "timeoutSecs": {
+            "title": "Request timeout (seconds)",
+            "type": "integer",
+            "default": 30,
+            "minimum": 5,
+            "maximum": 120,
+            "description": "Per-request timeout."
+        },
+        "proxyConfiguration": {
+            "title": "Proxy",
+            "type": "object",
+            "editor": "proxy",
+            "default": {
+                "useApifyProxy": false
+            },
+            "description": "Optional. Not needed for most sites."
+        }
+    }
+}

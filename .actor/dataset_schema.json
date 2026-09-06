@@ -1,0 +1,106 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "title": "Website"
+            },
+            "ok": {
+                "type": "boolean",
+                "description": "False rows are failures and are not charged."
+            },
+            "discovery": {
+                "type": "string",
+                "title": "Found via",
+                "description": "robots.txt, homepage link, common path, or input when you supplied the sitemap directly."
+            },
+            "sitemapCount": {
+                "type": "integer",
+                "title": "Sitemap files"
+            },
+            "sitemaps": {
+                "type": "array",
+                "title": "Sitemap tree",
+                "description": "Every sitemap file read, with its type, how many URLs it held, how many child sitemaps it pointed at, its depth in the index, and any parse failure.",
+                "items": {
+                    "type": "object"
+                }
+            },
+            "urlCount": {
+                "type": "integer",
+                "title": "URLs"
+            },
+            "urls": {
+                "type": "array",
+                "title": "URLs",
+                "description": "Each with loc, lastmod, changefreq, priority, hreflang alternates, image URLs, and the sitemap file it came from.",
+                "items": {
+                    "type": "object"
+                }
+            },
+            "stats": {
+                "type": "object",
+                "title": "Summary",
+                "description": "How many URLs carry a lastmod, alternates or images, and the newest lastmod on the site, which tells you when it last changed."
+            },
+            "notes": {
+                "type": [
+                    "array",
+                    "null"
+                ],
+                "description": "Anything worth knowing, such as a limit having been reached or a filter having been applied.",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "elapsedMs": {
+                "type": "integer"
+            },
+            "scrapedAt": {
+                "type": "string",
+                "description": "ISO timestamp."
+            },
+            "error": {
+                "type": "string",
+                "description": "Present only on failed rows."
+            }
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Websites",
+            "transformation": {
+                "fields": [
+                    "url",
+                    "discovery",
+                    "sitemapCount",
+                    "urlCount",
+                    "stats.newestLastmod"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "url": {
+                        "label": "Website",
+                        "format": "link"
+                    },
+                    "discovery": {
+                        "label": "Found via"
+                    },
+                    "sitemapCount": {
+                        "label": "Sitemap files"
+                    },
+                    "urlCount": {
+                        "label": "URLs"
+                    },
+                    "stats.newestLastmod": {
+                        "label": "Newest lastmod"
+                    }
+                }
+            }
+        }
+    }
+}

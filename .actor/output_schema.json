@@ -1,0 +1,13 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Website Sitemap Extractor output",
+    "description": "One dataset item per website, with its sitemap tree and every URL found.",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Websites and their URLs",
+            "description": "One row per website: how the sitemap was discovered, every sitemap file read and whether it parsed, and the full URL list with lastmod, changefreq, priority, hreflang alternates, images and which sitemap file each URL came from. Websites with no sitemap appear with ok=false and are not charged.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}

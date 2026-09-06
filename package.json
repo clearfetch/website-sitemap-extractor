@@ -1,0 +1,15 @@
+{
+    "name": "website-sitemap-extractor",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Find a website's sitemaps and extract every URL, with lastmod, alternates and images.",
+    "engines": { "node": ">=20.0.0" },
+    "dependencies": {
+        "apify": "^3.7.0",
+        "cheerio": "^1.0.0",
+        "got-scraping": "^4.0.0",
+        "tldts": "^6.1.0"
+    },
+    "scripts": { "start": "node ./src/main.js", "test": "node ./test/sitemap.test.mjs" },
+    "license": "MIT"
+}

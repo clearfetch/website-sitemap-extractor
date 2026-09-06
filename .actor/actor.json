@@ -1,0 +1,17 @@
+{
+    "actorSpecification": 1,
+    "name": "website-sitemap-extractor",
+    "title": "Website Sitemap Extractor - Find Sitemaps & Extract URLs",
+    "description": "Give it a domain and it finds the sitemaps itself, from robots.txt, the homepage or the usual paths, follows sitemap index files, unpacks gzipped ones, and returns every URL with lastmod, priority, hreflang alternates and images. No proxy, no login.",
+    "version": "1.0",
+    "buildTag": "latest",
+    "minMemoryMbytes": 256,
+    "maxMemoryMbytes": 2048,
+    "input": "./input_schema.json",
+    "output": "./output_schema.json",
+    "dockerfile": "../Dockerfile",
+    "readme": "../README.md",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
+}
