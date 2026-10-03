@@ -43,7 +43,7 @@ including the newest `lastmod` anywhere on the site, which tells you at a glance
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `urls` | array | — | Domains, or direct sitemap links. Also accepts `url` and `startUrls`. |
-| `maxUrlsPerSite` | integer | `0` | Stop after this many URLs per website. 0 means no limit. |
+| `maxUrlsPerSite` | integer | `0` | Stop after this many URLs per website. 0 means no limit. The example input uses 1,000 so a first run stays cheap. |
 | `maxSitemaps` | integer | `50` | How many sitemap files to read per website. |
 | `urlPattern` | string | — | Case-insensitive regular expression; only matching URLs are returned. |
 | `changedSince` | string | — | A date such as `2026-01-31`; only URLs with a `lastmod` on or after it. |
@@ -125,6 +125,10 @@ A website with no sitemap is reported and costs nothing:
 - **$0.02 per 1,000 URLs** returned. A 500-page site costs about a cent. A 50,000-page site costs about a dollar.
 - Websites with no sitemap are free.
 
+Paid Apify plans pay less: 10% off on Bronze, 20% on Silver and 30% on Gold and higher tiers.
+
+Apify also charges a run-start fee of $0.00005 per started GB of allocated memory (minimum one event), including runs that produce no chargeable results.
+
 ## Use cases
 
 - **Crawl planning**: get the URL list before you crawl, so you scrape only what exists.
@@ -172,6 +176,12 @@ different job with a different cost profile.
 **How deep does it follow index files?** As deep as they go, breadth-first, up to the **maxSitemaps** limit. If
 that limit stops it early, the output says so and tells you how many files were left.
 
+**What about very large sites?** A dataset row can hold about 8 MB, which is roughly 40,000 URLs. apify.com
+alone publishes over 600,000. When a site has more than fits, its row keeps the first ones and says so in
+`notes`, and the complete list goes to the run's key-value store as one JSON file. `fullUrlListKey` names it and
+`fullUrlListUrl` links to it directly. You are charged for every URL in the complete list, not just the row.
+Set **maxUrlsPerSite** if you only need a sample.
+
 **Are gzipped sitemaps supported?** Yes, detected from the file's own magic bytes, because servers routinely
 send them with the wrong content type.
 
@@ -179,7 +189,18 @@ send them with the wrong content type.
 
 **Is this legal?** A sitemap is a file a website publishes specifically to be read by machines. This reads it.
 
+## More tools from clearfetch
+
+- [Tech Stack Detector](https://apify.com/clearfetch/tech-stack-detector): the CMS, frameworks, analytics and hosting behind any website
+- [Website Contact Extractor](https://apify.com/clearfetch/website-contact-extractor): emails, phone numbers and social profiles from company websites
+- [Document Text Extractor](https://apify.com/clearfetch/document-text-extractor): PDF, DOCX and HTML to clean text and markdown
+- [Broken Link Checker](https://apify.com/clearfetch/broken-link-checker): 404s, redirect chains and soft 404s in bulk
+- [ATS Jobs Scraper](https://apify.com/clearfetch/ats-jobs-scraper): every open job from company careers pages on Greenhouse, Lever, Ashby, Workday and more
+
 ## Changelog
 
+- **1.0.1** (2026-09) — sites with more URLs than one dataset row can hold (about 40,000) no longer fail the
+  run; the row keeps what fits and the complete list is saved to the key-value store and linked from the row.
+  The example input now caps URLs at 1,000 per site.
 - **1.0.0** (2026-09) — first release: discovery from robots.txt, homepage links and common paths; recursive
   index following; gzip and plain-text sitemaps; hreflang alternates and images; filtering by pattern and date.
